@@ -8,30 +8,24 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name="app_users")
 @Getter
 @Setter
 @NoArgsConstructor
-@Table (name = "app_users")
 public class AppUser {
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String username;
-
-    @Column(nullable = false)
-    private String passwordHash;
-
-    @Column(nullable = false, unique = true)
+    
+    @Column(unique=true, nullable=false)
     private String email;
 
-    @Column (nullable = false)
+    @Column(nullable=false)
+    private String passwordHash;
+
+    @Column(nullable = false)
     private String role = "USER";
 
     private Instant createdAt = Instant.now();
-
-    // Getters and Setters
 }
-    
-
