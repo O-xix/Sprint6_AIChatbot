@@ -1,7 +1,7 @@
 package com.example.demo.model;
 
 import java.time.Instant;
-import java.until.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
