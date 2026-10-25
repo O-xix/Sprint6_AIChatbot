@@ -25,9 +25,9 @@ public class Conversation {
 
     private String title = "New chat";
 
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 
-    private Instant updatedAt;
+    private Instant updatedAt = Instant.now();
     
     @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
