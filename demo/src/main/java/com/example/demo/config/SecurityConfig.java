@@ -10,20 +10,19 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throw Exception{
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests()
+            .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/register", "/css/**", "/js/**", "/error").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest().authenticated())
             .formLogin(form -> form
                 .loginPage("/login")
                 .usernameParameter("username")
                 .defaultSuccessUrl("/chat", true)
-                .permitAll()
-            )
+                .permitAll())
             .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout");
+                .logoutSuccessUrl("/login?logout"));
         return http.build();
     }
     
