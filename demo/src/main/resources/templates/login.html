@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Log in · AI Chatbot</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="auth-page">
+    <main class="card">
+        <h1>Log in</h1>
+
+        <p class="notice" th:if="${param.registered}">Account created. You can log in now.</p>
+        <p class="notice" th:if="${param.logout}">You've been logged out.</p>
+        <p class="notice" th:if="${param.deleted}">Your account has been deleted.</p>
+        <p class="error" th:if="${param.error}">Wrong username or password.</p>
+
+        <form th:action="@{/login}" method="post">
+            <label>Username <input name="username" required autofocus></label>
+            <label>Password <input type="password" name="password" required></label>
+            <button class="btn-primary">Log in</button>
+        </form>
+
+        <p>No account? <a th:href="@{/register}">Register</a></p>
+    </main>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register · AI Chatbot</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="auth-page">
+    <main class="card">
+        <h1>Create an account</h1>
+
+        <p class="error" th:if="${error}" th:text="${error}"></p>
+
+        <form th:action="@{/register}" method="post">
+            <label>Username <input name="username" th:value="${username}" required autofocus></label>
+            <label>Password <input type="password" name="password" required minlength="8"></label>
+            <label>Confirm password <input type="password" name="confirmPassword" required></label>
+            <p class="hint">At least 8 characters, with at least one letter and one number.</p>
+            <button class="btn-primary">Register</button>
+        </form>
+
+        <p>Already have an account? <a th:href="@{/login}">Log in</a></p>
+    </main>
+</body>
+</html>
