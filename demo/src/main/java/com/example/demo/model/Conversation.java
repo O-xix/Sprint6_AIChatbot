@@ -1,8 +1,8 @@
 package com.example.demo.model;
 
 import java.time.Instant;
-import java.untill.ArrayList;
-import java.untill.List;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.Getter;

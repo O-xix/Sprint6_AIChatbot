@@ -28,7 +28,7 @@ public class ChatService {
     private final int maxMessageLength;
     private final int messagesPerHour;
 
-    public ChatService(ConversationRepo conversations, MessageRepo messages, LlmService llm, int maxHistory, int maxMessageLength, int messagesPerHour) {
+    public ChatService(ConversationRepo conversations, MessageRepo messages, LlmService llm,
                         @Value("${chat.maxHistory}") int maxHistory,
                         @Value("${chat.maxMessageLength}") int maxMessageLength,
                         @Value("${chat.messagesPerHour}") int messagesPerHour) {
@@ -38,8 +38,6 @@ public class ChatService {
         this.maxHistory = maxHistory;
         this.maxMessageLength = maxMessageLength;
         this.messagesPerHour = messagesPerHour;
-
-    }
     }
 
     public List<Conversation> getConversations(AppUser user) {
@@ -49,7 +47,9 @@ public class ChatService {
     public Conversation get(Long id, AppUser user) {
         return conversations.findByIdAndUser(id, user)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Conversation not found"));
-    }public Conversation create(AppUser user) {
+    }
+
+    public Conversation create(AppUser user) {
         return conversations.save(new Conversation(user));
     }
 
