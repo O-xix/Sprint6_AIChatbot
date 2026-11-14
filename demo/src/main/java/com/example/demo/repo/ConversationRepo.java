@@ -4,11 +4,12 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.AppUser;
 import com.example.demo.model.Conversation;
+import java.util.List;
 
 public interface ConversationRepo extends JpaRepository<Conversation, Long> {
-    Optional<Conversation> findByAppUser(AppUser appUser);
+    List<Conversation> findByUserOrderByUpdatedAtDesc(AppUser user);
 
-    Optional<Conversation> findByIdAndAppUser(Long id, AppUser appUser);
+    Optional<Conversation> findByUserAndId(AppUser appUser, Long id);
 
-    void deleteByIdAndAppUser(Long id, AppUser appUser);
+    void deleteByUser(AppUser appUser);
 }

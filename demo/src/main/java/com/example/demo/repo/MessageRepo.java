@@ -11,9 +11,8 @@ import com.example.demo.model.Conversation;
 import com.example.demo.model.Message;
 
 public interface MessageRepo extends JpaRepository<Message, Long> {
-    List<Message> findByConversation(Conversation conversation);
 
-    List<Message> findByConversationAndTimestampAfter(Conversation conversation, Instant timestamp);
+    List<Message> findByConversationOrderByCreatedAtDesc(Conversation conversation, Pageable pageable);
 
     long countByConversation_UserAndRoleAndUpdatedAfter(AppUser user, String role, Instant timestamp);
 }

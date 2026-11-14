@@ -17,14 +17,16 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String content;
-
-    @Column(nullable = false)
+    @ManyToOne(optional = false)
     private Conversation conversation;
 
     @Column(nullable = false)
     private String role;
+
+    @Column(nullable = false)
+    private String content;
+
+    private Instant createdAt = Instant.now();
 
     public Message(Conversation conversation, String role, String content) {
         this.content = content;
