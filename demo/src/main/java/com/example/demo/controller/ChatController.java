@@ -29,14 +29,12 @@ public class ChatController {
         return "redirect:/chat";
     }
 
-    @GetMapping ("/chat") {
-        public String latestChat(Principal principal) {
-            AppUser user = userService.findByUsername(principal.getName());
-            List<Conversation> chats = chatService.list(user);
-            Conversation chat = chats.isEmpty() ? chatService.create(user) : chats.get(0);
-            return "redirect:/chat/" + chat.getId();
-
-        }
+    @GetMapping("/chat")
+    public String latestChat(Principal principal) {
+        AppUser user = userService.findByUsername(principal.getName());
+        List<Conversation> chats = chatService.list(user);
+        Conversation chat = chats.isEmpty() ? chatService.create(user) : chats.get(0);
+        return "redirect:/chat/" + chat.getId();
     }
 
     @GetMapping("/chat/{id}")
