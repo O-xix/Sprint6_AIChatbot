@@ -23,7 +23,7 @@ public class LlmService {
         requestFactory.setReadTimeout(Duration.ofSeconds(30));
         this.restClient = builder.baseUrl("http://localhost:8080")
             .requestFactory(requestFactory)
-            .defaultHeader("Authorization", "Bearer" + apiKey)
+            .defaultHeader("Authorization", "Bearer " + apiKey)
             .build();
         this.model = model;
     }

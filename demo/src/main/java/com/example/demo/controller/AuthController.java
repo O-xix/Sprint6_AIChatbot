@@ -26,9 +26,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@RequestParam String username, @RequestParam String password, @RequestParam String ConfirmPassword, Model model) {
+    public String registerUser(@RequestParam String username, @RequestParam String password, @RequestParam String confirmPassword, Model model) {
         try{
-            if (!password.equals(ConfirmPassword)) {
+            if (!password.equals(confirmPassword)) {
                 throw new IllegalArgumentException("Passwords do not match");
             }
 
