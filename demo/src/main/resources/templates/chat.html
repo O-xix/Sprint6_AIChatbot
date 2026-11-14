@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Chatbot</title>
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="chat-layout">
+
+    <aside class="sidebar">
+        <form th:action="@{/chat/new}" method="post">
+            <button class="btn-primary">+ New chat</button>
+        </form>
+
+        <nav>
+            <a th:each="c : ${conversations}"
+               th:href="@{/chat/{id}(id=${c.id})}"
+               th:text="${c.title}"
+               th:classappend="${c.id == current.id} ? 'active'"></a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span sec:authentication="name"></span>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">Admin</a>
+            <a th:href="@{/account}">Account</a>
+            <form th:action="@{/logout}" method="post">
+                <button class="link">Log out</button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="chat">
+        <header class="chat-header">
+            <!-- Step 5 adds rename and delete here -->
+            <strong id="chat-title" th:text="${current.title}"></strong>
+        </header>
+
+        <div id="messages" class="messages">
+            <div th:each="m : ${current.messages}"
+                 class="message"
+                 th:classappend="${m.role}"
+                 th:text="${m.content}"></div>
+        </div>
+
+        <form id="send-form" class="composer" th:data-chat-id="${current.id}">
+            <textarea id="input" rows="2" maxlength="4000"
+                      placeholder="Message the chatbot (Enter to send, Shift+Enter for a new line)"></textarea>
+            <button id="send-btn" class="btn-primary">Send</button>
+        </form>
+        <p id="error" class="error" hidden></p>
+    </main>
+
+    <script th:src="@{/js/chat.js}"></script>
+</body>
+</html>

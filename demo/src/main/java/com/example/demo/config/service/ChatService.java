@@ -19,7 +19,7 @@ import com.example.demo.model.Message;
 import com.example.demo.repo.ConversationRepo;
 import com.example.demo.repo.MessageRepo;
 
-
+@Service
 public class ChatService {
     private final ConversationRepo conversations;
     private final MessageRepo messages;
