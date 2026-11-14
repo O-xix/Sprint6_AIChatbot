@@ -19,6 +19,7 @@ import com.example.demo.model.Message;
 import com.example.demo.repo.ConversationRepo;
 import com.example.demo.repo.MessageRepo;
 
+@Service
 public class ChatService {
     private final ConversationRepo conversations;
     private final MessageRepo messages;
@@ -44,7 +45,7 @@ public class ChatService {
     }
 
     public Conversation get(Long id, AppUser user) {
-        return conversations.findByUserAndId(id, user)
+        return conversations.findByUserAndId(user, id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Chat not found."));
     }
 
@@ -60,7 +61,7 @@ public class ChatService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Type a message first.");
         }
         if (text.length() > maxMessageLength) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Messages can be at most " + maxMessageLength + " characters.")
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Messages can be at most " + maxMessageLength + " characters.");
         }
 
         messages.save(new Message(conversation, "user", text));
@@ -82,7 +83,7 @@ public class ChatService {
             replyText = llm.reply(history);
         } catch (Exception e) {
             conversations.save(conversation);
-            throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "The chatbot couldn't answer right now. Please try again in a moment.")
+            throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "The chatbot couldn't answer right now. Please try again in a moment.");
         }
 
         Message reply = messages.save(new Message(conversation, "assistant", replyText));

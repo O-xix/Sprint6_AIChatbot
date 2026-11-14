@@ -9,7 +9,7 @@ import com.example.demo.model.AppUser;
 import com.example.demo.model.Conversation;
 
 public interface ConversationRepo extends JpaRepository<Conversation, Long> {
-    List<Conversation> findByUserOrderByCreatedAtDesc(AppUser user);
+    List<Conversation> findByUserOrderByUpdatedAtDesc(AppUser user);
 
     Optional<Conversation> findByUserAndId(AppUser user, Long id);
 

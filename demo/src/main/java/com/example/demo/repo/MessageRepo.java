@@ -12,7 +12,7 @@ import com.example.demo.model.Message;
 
 public interface MessageRepo extends JpaRepository<Message, Long> {
 
-    List<Message> findByConversationOrderByCreatedAtAsc(Conversation conversation, Pageable pageable);
+    List<Message> findByConversationOrderByCreatedAtDesc(Conversation conversation, Pageable pageable);
     
     long countByConversation_UserAndRoleAndCreatedAtAfter(AppUser user, String role, Instant time);
 }
