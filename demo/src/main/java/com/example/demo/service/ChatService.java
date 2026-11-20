@@ -29,9 +29,9 @@ public class ChatService {
     private final int messagesPerHour;
 
     public ChatService(ConversationRepo conversations, MessageRepo messages, LlmService llm,
-                        @Value("${chat.maxHistory}") int maxHistory,
-                        @Value("${chat.maxMessageLength}") int maxMessageLength,
-                        @Value("${chat.messagesPerHour}") int messagesPerHour) {
+                        @Value("${chat.max-history}") int maxHistory,
+                        @Value("${chat.message-limit}") int maxMessageLength,
+                        @Value("${chat.messages-per-hour}") int messagesPerHour) {
         this.conversations = conversations;
         this.messages = messages;
         this.llm = llm;
@@ -91,4 +91,20 @@ public class ChatService {
         return reply;
         
     }
+
+    @Transactional
+    public void rename(Long id, AppUser user, String title) {
+        Conversation conversation = get(id, user);
+        title = title == null ? "" : title.trim();
+        if (!title.isEmpty()) {
+            conversation.setTitle(title.length() > 100 ? title.substring(0, 100) : title);
+            conversations.save(conversation);
+        }
+    }
+
+    @Transactional public void delete(Long id, AppUser user) {
+        conversations.delete(get(id, user));
+    }
 }
+
+

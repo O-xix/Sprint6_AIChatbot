@@ -14,5 +14,5 @@ public interface MessageRepo extends JpaRepository<Message, Long> {
 
     List<Message> findByConversationOrderByCreatedAtDesc(Conversation conversation, Pageable pageable);
 
-    long countByConversation_UserAndRoleAndUpdatedAfter(AppUser user, String role, Instant timestamp);
+    long countByConversation_UserAndRoleAndCreatedAtAfter(AppUser user, String role, Instant timestamp);
 }

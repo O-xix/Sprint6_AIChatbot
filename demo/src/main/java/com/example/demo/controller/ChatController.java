@@ -14,7 +14,7 @@ import com.example.demo.model.Conversation;
 import com.example.demo.service.ChatService;
 import com.example.demo.service.UserService;
 
-
+@Controller
 public class ChatController {
     private final ChatService chatService;
     private final UserService userService;
