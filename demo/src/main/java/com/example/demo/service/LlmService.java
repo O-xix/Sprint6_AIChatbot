@@ -1,4 +1,4 @@
-package com.example.demo.config.service;
+package com.example.demo.service;
 
 import java.time.Duration;
 import java.util.List;
@@ -17,11 +17,11 @@ public class LlmService {
     public record ChatResponse(List<Choice> choices) {}
     private final RestClient restClient;
     private final String model;
-    public LlmService(RestClient.Builder builder, @Value("${llm.model}") String model) {
+    public LlmService(RestClient.Builder builder, @Value("${llm.base-url}") String baseUrl, @Value ("${llm.api-key}") String apiKey, @Value("${llm.model}") String model) {
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setConnectTimeout(Duration.ofSeconds(5));
         requestFactory.setReadTimeout(Duration.ofSeconds(30));
-        this.restClient = builder.baseUrl("http://localhost:8080")
+        this.restClient = builder.baseUrl(baseUrl)
             .requestFactory(requestFactory)
             .defaultHeader("Authorization", "Bearer " + apiKey)
             .build();

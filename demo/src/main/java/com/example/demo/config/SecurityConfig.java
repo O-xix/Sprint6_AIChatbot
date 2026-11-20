@@ -13,29 +13,20 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        .authorizeRequests()
-            .antMatchers("/api/auth/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .csrf().disable();
-        .formLogin()
+        http.authorizeHttpRequests(auth -> auth
+            .requestMatchers("/login", "/register", "/css/**", "/js/**", "/error").permitAll()
+            .requestMatchers("/admin/**").hasRole("ADMIN")
+            .anyRequest().authenticated())
+        .formLogin(form -> form
             .loginPage("/login")
-            .permitAll()
-            .and()
-            .logout()
-            .permitAll();
+            .usernameParameter("username")
+            .defaultSuccessUrl("/chat", true)
+            .failureUrl("/login?error")
+            .permitAll())
 
-        .logout()
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/login?logout")
-            .invalidateHttpSession(true)
-            .deleteCookies("JSESSIONID");
+        .logout(logout -> logout
+            .logoutSuccessUrl("/login?logout"));
 
         return http.build();
     }

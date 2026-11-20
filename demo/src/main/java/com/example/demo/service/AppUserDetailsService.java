@@ -1,4 +1,4 @@
-package com.example.demo.config.service;
+package com.example.demo.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,19 +10,24 @@ import com.example.demo.repo.AppUserRepo;
 import com.example.demo.model.AppUser;
 
 @Service
-public class AppUser implements UserDetailsService {
+public class AppUserDetailsService implements UserDetailsService {
 
     private final AppUserRepo users;
 
-    public AppUser(AppUserRepo users) {
+    public AppUserDetailsService(AppUserRepo users) {
         this.users = users;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser appUser = appUserRepo.findByUsername(username)
+        AppUser user = users.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
-        return new User(appUser.getUsername(), appUser.getPassword(), appUser.getAuthorities());
+
+
+        return User.withUsername(user.getUsername())
+                .password(user.getPasswordHash())
+                .roles(user.getRole())
+                .build();
     }
 }
 

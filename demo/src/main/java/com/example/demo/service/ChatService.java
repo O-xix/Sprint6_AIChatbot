@@ -1,4 +1,4 @@
-package com.example.demo.config.service;
+package com.example.demo.service;
 
 import java.time.Duration;
 import java.util.List;
@@ -40,12 +40,12 @@ public class ChatService {
         this.messagesPerHour = messagesPerHour;
     }
 
-    public List<Conversation> getConversations(AppUser user) {
+    public List<Conversation> list(AppUser user) {
         return conversations.findByUserOrderByUpdatedAtDesc(user);
     }
 
     public Conversation get(Long id, AppUser user) {
-        return conversations.findByIdAndUser(id, user)
+        return conversations.findByUserAndId(user, id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Conversation not found"));
     }
 

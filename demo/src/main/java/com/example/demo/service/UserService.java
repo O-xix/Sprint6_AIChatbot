@@ -5,17 +5,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
  
 import com.example.demo.model.AppUser;
-import com.example.demo.repository.AppUserRepository;
-import com.example.demo.repository.ConversationRepository;
+import com.example.demo.repo.AppUserRepo;
+import com.example.demo.repo.ConversationRepo;
  
 @Service
 public class UserService {
  
-    private final AppUserRepository users;
-    private final ConversationRepository conversations;
+    private final AppUserRepo users;
+    private final ConversationRepo conversations;
     private final PasswordEncoder passwordEncoder;
  
-    public UserService(AppUserRepository users, ConversationRepository conversations,
+    public UserService(AppUserRepo users, ConversationRepo conversations,
                        PasswordEncoder passwordEncoder) {
         this.users = users;
         this.conversations = conversations;
